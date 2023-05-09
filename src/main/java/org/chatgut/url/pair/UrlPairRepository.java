@@ -8,8 +8,8 @@ import java.util.Optional;
 @ApplicationScoped
 public class UrlPairRepository implements PanacheMongoRepository<UrlPair> {
 
-    public UrlPair findByShortUrlPath(String shortUrlPath) {
-        return find("shortenedUrl", shortUrlPath).stream().findFirst().orElseThrow();
+    public Optional<UrlPair> findByShortUrlPath(String shortUrlPath) {
+        return find("shortenedUrl", "http://localhost:8080/"+shortUrlPath).firstResultOptional();
     }
 
 }

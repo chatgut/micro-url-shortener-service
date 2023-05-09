@@ -8,7 +8,6 @@ import org.chatgut.Mapper;
 import org.chatgut.dto.OriginalUrlDTO;
 import org.chatgut.dto.ShortenedUrlDTO;
 
-import javax.annotation.processing.Generated;
 import java.net.URI;
 
 @Path("/url")
@@ -17,28 +16,21 @@ public class UrlPairController {
     @Inject
     UrlPairRepository urlRepo;
 
-    public UrlPairController(UrlPairRepository urlRepo) {
-        this.urlRepo = urlRepo;
-    }
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/generate")
     public ShortenedUrlDTO generateShortUrl(OriginalUrlDTO originalUrl) {
         ShortenedUrlDTO shortUrl = Mapper.convertToShort(originalUrl);
-        urlRepo.persist(new UrlPair(originalUrl.originalUrl(), shortUrl.shortenedUrl()));
+        urlRepo.persist(new UrlPair(originalUrl.url(), shortUrl.short_url())); //TODO:: Handle possible exceptions/errors
         return shortUrl;
     }
 
     @GET
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Generated(MediaType.APPLICATION_JSON)
-    @Path("/get")
-    public String redirect(ShortenedUrlDTO shortPath) {
-        return urlRepo.findByShortUrlPath(shortPath.shortenedUrl()).getOriginalUrl(); //TODO::
+    @Path("/{shortPath}")
+    public Response redirect(@PathParam("shortPath") String shortPath) {
 
-//        return Response.status(303).location(URI.create(urlRepo.findByShortUrlPath(shortPath.shortenedUrl()).getOriginalUrl())).build();
-//        return new OriginalUrlDTO("");
+        String url = urlRepo.findByShortUrlPath(shortPath).get().getOriginalUrl();
+        return Response.status(303).location(URI.create(url)).build();
     }
 }

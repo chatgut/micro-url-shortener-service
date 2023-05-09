@@ -9,8 +9,8 @@ public class Mapper {
     public Mapper() {
     }
 
-    public static ShortenedUrlDTO convertToShort(OriginalUrlDTO originalUrl) {
-        String shortUrlEndpoint = String.valueOf(originalUrl.originalUrl().hashCode()).substring(0, 5);
+    public static ShortenedUrlDTO convertToShort(OriginalUrlDTO originalUrlDTO) {
+        String shortUrlEndpoint = String.valueOf(originalUrlDTO.url().hashCode()).substring(0, 5); //TODO:: change implementation
         return new ShortenedUrlDTO(SHORT_DOMAIN + shortUrlEndpoint);
     }
 

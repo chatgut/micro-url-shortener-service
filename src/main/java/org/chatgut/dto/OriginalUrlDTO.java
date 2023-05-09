@@ -1,3 +1,3 @@
 package org.chatgut.dto;
 
-public record OriginalUrlDTO(String originalUrl) {}
+public record OriginalUrlDTO(String url) {}

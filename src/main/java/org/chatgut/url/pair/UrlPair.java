@@ -2,6 +2,8 @@ package org.chatgut.url.pair;
 
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 
+import java.util.Objects;
+
 public class UrlPair extends PanacheMongoEntity {
     String originalUrl;
     String shortenedUrl;
@@ -28,6 +30,22 @@ public class UrlPair extends PanacheMongoEntity {
 
     public void setShortenedUrl(String shortenedUrl) {
         this.shortenedUrl = shortenedUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UrlPair urlPair = (UrlPair) o;
+
+        if (!Objects.equals(originalUrl, urlPair.originalUrl)) return false;
+        return Objects.equals(shortenedUrl, urlPair.shortenedUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return 13;
     }
 
     @Override
