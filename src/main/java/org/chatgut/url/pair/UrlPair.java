@@ -13,4 +13,29 @@ public class UrlPair extends PanacheMongoEntity {
         this.originalUrl = originalUrl;
         this.shortenedUrl = shortenedUrl;
     }
+
+    public String getOriginalUrl() {
+        return originalUrl;
+    }
+
+    public void setOriginalUrl(String originalUrl) {
+        this.originalUrl = originalUrl;
+    }
+
+    public String getShortenedUrl() {
+        return shortenedUrl;
+    }
+
+    public void setShortenedUrl(String shortenedUrl) {
+        this.shortenedUrl = shortenedUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "UrlPair{" +
+                "originalUrl='" + originalUrl + '\'' +
+                ", shortenedUrl='" + shortenedUrl + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
