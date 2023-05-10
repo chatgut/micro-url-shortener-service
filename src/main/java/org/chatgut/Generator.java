@@ -1,7 +1,9 @@
 package org.chatgut;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.chatgut.dto.ShortenedUrlDTO;
+import org.chatgut.url.id.CounterRepository;
 import org.hashids.Hashids;
 
 @ApplicationScoped
@@ -9,9 +11,14 @@ public class Generator {
 
     final static String SHORT_DOMAIN = "http://localhost:8080/";
     //TODO:: get domain from configuration file
-    private long counter = 0;
+
+    @Inject
+    CounterRepository counterRepo;
 
     public ShortenedUrlDTO generateShort() {
+
+        var counter = counterRepo.getCounter();
+
         Hashids hashids = new Hashids("7y35ogo23t");
         String hash = hashids.encode(counter++);
         return new ShortenedUrlDTO(SHORT_DOMAIN + hash);
