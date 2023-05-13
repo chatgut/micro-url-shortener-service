@@ -42,9 +42,9 @@ public class UrlPairController {
     @GET
     @Path("/{shortPath}")
     public Response redirect(@PathParam("shortPath") String shortPath) {
-
-//        TODO::PresentCheck
-        String url = urlRepo.findByShortUrlPath(shortPath).get().getOriginalUrl();
-        return Response.status(303).location(URI.create(url)).build();
+        var result = urlRepo.findByShortUrlPath(shortPath);
+        return result.isPresent()
+                ? Response.status(303).location(URI.create(result.get().getOriginalUrl())).build()
+                : Response.noContent().build();
     }
 }
