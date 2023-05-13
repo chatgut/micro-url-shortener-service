@@ -22,11 +22,13 @@ public class UrlPairController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("")
-    public ShortenedUrlDTO generateShortUrl(OriginalUrlDTO originalUrl) {
+    public Response generateShortUrl(OriginalUrlDTO originalUrl) {
+
         var optionalResult = urlRepo.findByOriginalUrlPath(originalUrl.url());
 
         if (optionalResult.isPresent())
-            return new ShortenedUrlDTO(optionalResult.get().getShortenedUrl());
+            return Response.ok(new ShortenedUrlDTO(optionalResult.get().getShortenedUrl())).build();
+
         ShortenedUrlDTO shortUrl = generator.generateShort();
 
         try {

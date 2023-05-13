@@ -20,7 +20,10 @@ public class Generator {
         var counter = counterRepo.getCounter();
 
         Hashids hashids = new Hashids("7y35ogo23t");
-        String hash = hashids.encode(counter++);
+        String hash = hashids.encode(counter.getCount());
+        counter.setCount(counter.getCount() + 1L);
+        counterRepo.persistOrUpdate(counter);
+
         return new ShortenedUrlDTO(SHORT_DOMAIN + hash);
     }
 }
