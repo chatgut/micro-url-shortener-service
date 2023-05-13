@@ -34,7 +34,7 @@ public class UrlPairController {
         try {
             urlRepo.persist(new UrlPair(originalUrl.url(), shortUrl.short_url()));
         } catch (Exception e) {
-            return Response.status(503).header("Retry-After", 1).build(); //TODO:: Use proper response code
+            return Response.status(503).header("Retry-After", 1).build();
         }
         return Response.status(201).entity(shortUrl).build();
     }
