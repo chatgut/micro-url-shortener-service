@@ -2,15 +2,17 @@ package org.chatgut;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.core.UriBuilder;
 import org.chatgut.dto.ShortenedUrlDTO;
 import org.chatgut.url.id.CounterRepository;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hashids.Hashids;
 
 @ApplicationScoped
 public class Generator {
 
-    final static String SHORT_DOMAIN = "http://localhost:8080/";
-    //TODO:: get domain from configuration file
+    @ConfigProperty(name = "app.domain-name")
+    String APP_DOMAIN;
 
     @Inject
     CounterRepository counterRepo;
@@ -24,6 +26,6 @@ public class Generator {
         counter.setCount(counter.getCount() + 1L);
         counterRepo.persistOrUpdate(counter);
 
-        return new ShortenedUrlDTO(SHORT_DOMAIN + hash);
+        return new ShortenedUrlDTO(UriBuilder.newInstance().path(APP_DOMAIN).path(hash).toString());
     }
 }
