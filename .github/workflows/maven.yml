@@ -38,3 +38,7 @@ jobs:
 
       - name: Pack with Maven
         run: mvn -B package --file pom.xml
+
+      - name: Dockerize
+        run: docker build -f src/main/docker/Dockerfile.jvm -t quarkus/micro-url-shortener-service-jvm .
+
