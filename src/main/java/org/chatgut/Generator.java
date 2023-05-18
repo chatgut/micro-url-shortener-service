@@ -26,6 +26,6 @@ public class Generator {
         counter.setCount(counter.getCount() + 1L);
         counterRepo.persistOrUpdate(counter);
 
-        return new ShortenedUrlDTO(UriBuilder.newInstance().path(APP_DOMAIN).path(hash).toString());
+        return new ShortenedUrlDTO(UriBuilder.newInstance().path(APP_DOMAIN).path(hash).build().toString());
     }
 }
