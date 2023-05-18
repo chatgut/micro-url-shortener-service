@@ -2,6 +2,7 @@ package org.chatgut.url.pair;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.core.UriBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.Optional;
@@ -13,7 +14,7 @@ public class UrlPairRepository implements PanacheMongoRepository<UrlPair> {
     String APP_DOMAIN;
 
     public Optional<UrlPair> findByShortUrlPath(String shortUrlPath) {
-        return find("shortenedUrl", APP_DOMAIN + shortUrlPath).firstResultOptional();
+        return find("shortenedUrl", UriBuilder.newInstance().path(APP_DOMAIN).path(shortUrlPath).build().toString()).firstResultOptional();
     }
 
     public Optional<UrlPair> findByOriginalUrlPath(String originalUrl) {
