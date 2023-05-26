@@ -1,3 +1,68 @@
+# Micro url shortener service
+
+Welcome to the Micro URL Shortener Service! This repository contains the code and resources for a simple and efficient URL shortening service. Easily convert long web addresses into short, concise URLs!
+
+
+## Getting Started
+
+This service uses a Mongo database to save the generated URL mappings, so you can start off by spinning up a MongoDB container. For example by using the command:
+```
+docker run --name mongodb -p 27017:27017 -d mongo:latest
+```
+
+Now, run this application with the required environment variables.
+
+MONGO_DB_URI - 
+APP_DOMAIN_NAME - Insert a domain name that you own and want to use. In dev mode this defaults to: http://localhost:8080.
+
+format på miljövariabler
+Configure the service by setting up the required environment variables.
+
+
+## API
+
+To convert a long URL to a shorter version, make a POST request: 
+
+POST: /short
+```
+{
+  "url": [ORIGINAL_URL]
+}
+```
+
+If a shortened URL could be successfully provided, you will get a response code of 200 or 201, together with a JSON-object:
+
+```
+{
+  "short_url": [SHORT_URL as String]
+}
+```
+
+Later when you click on a shortened URL, you will be redirected to the original URL.
+
+
+###### Disclaimer: This project is a school assignment and is solely for educational purposes. The project is not intended for commercial use or distribution.
+
+
+
+
+
+
+docker network create mynetwork
+docker run -p 27017:27017 --name mymongo --network-alias mymongo --network mynetwork -d mongo:latest
+docker pull ghcr.io/chatgut/micro-url-shortener-service:main
+docker run -p 8004:8080 --name myURLservice --network-alias myURLservice --network mynetwork -e MONGO_DB_URI=mongodb://mymongo:27017 -e APP_DOMAIN_NAME=http://127.0.0.1:8004 ghcr.io/chatgut/micro-url-shortener-service:main
+docker run -p 8080:8080 --name frontend --network-alias myfrontend --network mynetwork chatgut/frontend:version
+
+
+docker run -p 8004:8080 --name micro-url-shortener-service --network-alias myURLservice --network mynetwork -e MONGO_DB_URI=mongodb://mymongo:27017 -e APP_DOMAIN_NAME=http://127.0.0.1:8080 chatgut/micro-url-shortener-service:version
+docker run -p 8080:8080 --name frontend --network-alias myfrontend --network mynetwork chatgut/frontend:version
+
+
+
+
+
+
 # micro-url-shortener-service
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
